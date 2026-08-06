@@ -1,0 +1,371 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+
+    background:#000;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:Georgia, serif;
+
+    color:white;
+
+    cursor: none;
+}
+
+/* #region Cursor */
+* {
+    cursor: none !important;
+}
+
+.custom-cursor {
+
+    position:fixed;
+
+    width:40px;
+    height:40px;
+
+    pointer-events:none;
+
+    transform:translate(-50%, -50%);
+
+    z-index:9999;
+
+}
+
+.cursor-core {
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:15px;
+    height:15px;
+
+    transform:translate(-50%, -50%);
+
+    background:white;
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 10px yellow,
+        0 0 20px yellow;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        box-shadow .15s ease;
+
+}
+
+.cursor-core.active {
+
+    background:white;
+
+    box-shadow:
+        0 0 15px #4da6ff,
+        0 0 30px #4da6ff;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.5);
+
+}
+
+.cursor-core.clicking {
+
+    transform:
+        translate(-50%, -50%)
+        scale(.7);
+
+}
+/* #endregion */
+
+/* #region Card Static*/
+.scene{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    perspective:1200px;
+}
+
+.card {
+
+    width:380px;
+    height:650px;
+
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding:55px 40px;
+
+    box-shadow:
+        0 40px 80px rgba(0,0,0,0.45);
+
+    position:relative;
+
+    transition:
+        transform .15s ease,
+        box-shadow .3s ease;
+
+}
+.initial {
+
+    font-family:
+    "Bodoni 72",
+    "Didot",
+    serif;
+
+    font-size:180px;
+
+    line-height:.8;
+
+    margin-bottom:40px;
+
+    color:#050505;
+
+}
+.name {
+
+    font-family:
+    "Cormorant Garamond",
+    serif;
+
+    font-size:36px;
+
+    font-weight:400;
+    margin-bottom:15px;
+    letter-spacing:2px;
+    color:#000000;
+
+}
+/* #endregion */
+
+/* #region Lightbulb*/
+.logo {
+
+    width:110px;
+    margin-top: 30px;
+}
+.bulb-outline {
+    stroke: rgb(199,162,103);
+    stroke-width: 1px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    transition: 
+        stroke 0.3s ease,
+        filter 0.3s ease;
+}
+.logo:hover .bulb-outline {
+    stroke: #fff4a3;
+    filter:
+        drop-shadow(0 0 15px #ffe066);
+}
+.logo:hover .bulb-line {
+    animation: bulbPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes bulbPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px #ffe066);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 25px #fff2a6);
+    }
+}
+/* #endregion */
+
+/* #region Roles*/
+
+.roles {
+
+    font-family:
+    "Cormorant Garamond",
+    serif;
+
+    font-style:italic;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+    font-size:14px;
+
+    color:#c87932;
+}
+
+.roles a {
+
+    color:#c87932;
+
+    text-decoration:none;
+
+    display:inline-block;
+
+    transition:
+        color .4s ease,    
+        transform .2s ease,
+        text-shadow .2s ease;
+
+}
+
+.artist:hover {
+
+    color:purple;
+
+    transform:
+        translateY(-3px);
+
+    text-shadow:
+
+        0 0 10px rgba(247, 37, 194, 0.7);
+
+}
+
+.scientist:hover {
+
+    color:#065f53;
+
+    text-shadow:
+
+        0 0 10px rgb(20, 190, 176);
+
+    transform:
+        translateY(-3px);
+
+}
+
+.tinkerer:hover {
+
+    color:#e4861c;
+
+    text-shadow:
+
+        0 0 10px rgb(136, 24, 4);
+
+    transform:
+        translateY(-3px);
+
+}
+
+.role:hover {
+    animation:
+        pulse .8s infinite alternate;
+}
+@keyframes pulse {
+
+from {
+
+    filter:
+    brightness(1);
+}
+to {
+    filter:
+    brightness(1.35);
+}
+
+}
+
+/* #endregion */
+
+/* #region Dialogue*/
+
+.dialogue-window {
+    position: fixed;
+    width: 420px;
+    min-height: 250px;
+
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgb(125, 104, 68);
+
+    color: rgb(235, 206, 140);
+
+    font-family: monospace;
+
+    top: 30%;
+    left: 55%;
+
+    transform: scale(0);
+    opacity: 0;
+
+    transition: 
+        opacity 0.5s ease,
+        transform 0.5s ease;
+
+    z-index: 100;
+}
+
+.dialogue-window.active {
+    opacity: 1;
+    transform: scale(1);
+}   
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 8px 12px;
+
+    background: rgb(35, 35, 35);
+
+    border-bottom: 1px solid rgb(125,104,68);
+
+    cursor: grab;
+    user-select: none;
+}
+
+.terminal-header button {
+    background:none;
+    border:none;
+
+    color:inherit;
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+.terminal-body {
+    padding:20px;
+
+    line-height:1.5;
+}
+
+.typing::after{
+
+    content: "█";
+
+    margin-left: 2px;
+
+    animation: blink .8s steps(1) infinite;
+}
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+/* #endregion */
+
