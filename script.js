@@ -13,6 +13,16 @@ let isDragging = false;
 let offsetX = 0;
 let offsetY = 0;
 
+const isMobile = 
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+if (isMobile) {
+    document.querySelector(".scene").style.display = "none";
+    document.getElementById("mobileMessage").style.display = "block";
+    document.querySelector(".custom-cursor").style.display = "none";
+    mobileBootSequence();   
+}
 const terminal = {
 
     body: document.querySelector(".terminal-body"),
@@ -39,6 +49,9 @@ const terminal = {
             await new Promise(resolve =>
                 setTimeout(resolve, line.pause ?? 500)
             );
+             if(currentSession !== this.session){
+             return;
+    }
             this.clear();
             continue;
         }
@@ -54,7 +67,7 @@ const terminal = {
     },
 
 
-    async type(text, speed=50, pause=400, session, keepCursor=false){
+    async type(text="", speed=50, pause=400, session, keepCursor=false){
 
         const line=document.createElement("p");
         line.classList.add("typing");
@@ -332,3 +345,95 @@ if(tinkerer) {
 
 });
 } 
+
+async function mobileBootSequence() {
+
+    const terminal = document.getElementById("mobileTerminalBody");
+
+    const lines = [
+        {
+            text: "> detecting display environment...",
+            pause: 1200
+        },
+        {
+            text: "> detecting...",
+            pause: 1200
+        },
+        {
+            text: "> detecting...",
+            pause: 3000
+        },
+        {
+            text: "> oh.",
+            pause: 1800
+        },
+        {
+            text: "> you're on a phone.",
+            pause: 2000
+        },
+        {
+            text: "> ...",
+            pause: 1000
+        },
+        {
+            text: "> interesting.",
+            pause: 2300
+        },
+        //{
+        //command: "clear",
+        //pause: 500
+        //},
+
+        {
+            text: "> unfortunately, this particular exhibit",
+            pause: 600
+        },
+        {
+            text: "> prefers a full-sized room.",
+            pause: 1000
+        },
+        {
+            text: "> lets try a larger window next time,",
+            pause: 150
+        },
+        {   text: "> shall we?",
+            pause: 999999
+        }
+    ];
+
+    for (const line of lines) {
+
+        if (line.command === "clear") {
+
+            await new Promise(resolve =>
+                setTimeout(resolve, line.pause ?? 500)
+            );
+
+            terminal.innerHTML = "";
+
+            continue;
+        }
+        const p = document.createElement("p");
+        terminal.appendChild(p);
+
+        for (const char of line.text) {
+
+            p.textContent += char;
+
+            await new Promise(resolve =>
+                setTimeout(resolve, Math.random()*50 + 90)
+            );
+        }
+
+        const cursor = document.createElement("span");
+        cursor.textContent = "█";
+        cursor.classList.add("cursor");
+
+        p.appendChild(cursor);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, line.pause ?? 500)
+        );
+cursor.remove();
+    }
+}
